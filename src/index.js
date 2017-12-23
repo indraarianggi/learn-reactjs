@@ -1,155 +1,122 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';          // impor React library
+import ReactDOM from 'react-dom';   // impor React library yang berhubungan dengan DOM
 
 /*
-    JSX elemen diinisialisasi kedalam sebuah variabel
+    React Component
 
-    Setiap elemen JSX harus memiliki tag penutup (closing tag).
-    Bahkan untuk elemen yang hanya membutuhkan satu tag,
-    contoh: <img . . . . /> ataupun <br/>
+    Deklarasi kelas komponen (MyComponent) dengan menurunkan
+    dari class Component (React.Component) yang berasal dari library React.
+
+    Nama kelas komponen UpperCamelCase.
+
+    Harus terdapat fungsi render() menyatakan elemen JSX yang akan dirender.
+
+    Render kelas komponen (MyComponent) menggunakan method render dari ReactDOM,
+    dengan menyebutkan nama kelasnya (<MyComponent />).
 */
-const title = <h1>Hello, I am learn ReactJs</h1>;
+class MyComponent extends React.Component {
+    render() {
+        return <h1>Hello World!</h1>;
+    }
+}
+
+/*
+    Multiline JSX
+
+    Gunakan kurung buka-tutup ( ) untuk elemen JSX yang lebih dari 1 baris.
+*/
+class MultiLineQuote extends React.Component {
+    render() {
+        return (
+            <blockquote>
+                <p>
+                    The world is full of objects, more or less interesting; I do not wish to add any more.
+                </p>
+                <cite>
+                    <a target="_blank" href="http://bit.ly/1WGzM4G">
+                        Douglas Huebler
+                    </a>
+                </cite>
+            </blockquote>
+        );
+    }
+}
 
 
 /*
-    JSX elemen dengan atribut => sama seperti pada HTML
+    Variabel Atribut dalam Component
+
+    Gunakan { } untuk menyisipkan sintaks JavaScript ke dalam element JSX.
 */
-const title2 = <h1 id='title'>Hello, I am learn ReactJs</h1>;
-
-
-/*
-    Atribut class dalam elemen JSX
-
-    Gunakan className untuk menyatakan class dalam elemen JSX
-    Ini akan dirender sebagai class oleh React
-*/
-const title3 = <h1 className='title'>How to add class attribute to JSX element</h1>;
-
-
-/*
-    Nested JSX elemen (lebih dari satu baris)
-
-    Menggunakan tanda kurung-buka-tutup,
-    Hanya ada satu elemen terluar
-*/
-const list = (
-    <ul>
-        <li>Pizza</li>
-        <li>Kebab</li>
-        <li>Spageti</li>
-    </ul>
-);
-
-
-/*
-    JSX elemen dalam objek
-    
-    Akses dengan cara: obj.namadepan
-*/
-const obj = {
-    namadepan       : <h1>Indra</h1>,
-    namabelakang    : <h1>Arianggi</h1>
+const owl = {
+    title: "Excellent Owl",
+    src: "https://s3.amazonaws.com/codecademy-content/courses/React/react_photo-owl.jpg"
 };
 
-
-/*
-    JavaScript dalam elemen JSX
-
-    Gunakan { } untuk mengapit sintaks JavaScript dalam elemen JSX
-*/
-// Contoh 1
-const operasi = <h1>Hasil 2 + 3 adalah { 2 + 3 }</h1>
-
-// Contoh 2
-let nama = 'Indra Arianggi';
-const salam = <h1>Hallo, nama saya { nama }. Salam kenal</h1>
-
-// Contoh 3
-const pi = (
-    <div>
-        <h1>
-            PI, YALL!
-        </h1>
-        <p>
-            { Math.PI.toFixed(20) }
-        </p>
-    </div>
-);
-
-
-/*
-    Varibel untuk atribut dalam JSX
-*/
-const goose = 'https://s3.amazonaws.com/codecademy-content/courses/React/react_photo-goose.jpg';
-var gooseImg = <img src = { goose }/>;
-
-
-/*
-*   Event handler
-*/
-function handleClick() {
-    alert('I was clicked');
+class VariableAttribute extends React.Component {
+    render() {
+        return (
+            <div>
+                <h1>
+                    {owl.title}
+                </h1>
+                <img
+                    src = {owl.src}
+                    alt = {owl.title}
+                />
+            </div>
+        );
+    }
 }
 
-const btn = <button onClick={handleClick}>Click Me!</button>
-
 
 /*
-*   If Statemen di JSX
-*
-*   Dalam elemen JSK tidak bisa disisipkan statemen if
-*   misal, sintaks berikut salah:
-*
-*   const ifState = <h1>Grade : { if (nilai>80)?'A':'B' }</h1>
-*
-*
-*   Untuk mensiasatinya, letakkan statemne if di luar elemen JSX
-*   sebagai berikut:
-*/
-let message;
-const grade = 'A'
+    Logika dalam Fungsi Render
 
-if (grade == 'A') {
-  message = (
-    <h1>
-      Wow, you are so smart!
-    </h1>
-  );
-} else {
-  message = (
-    <h1>
-      Maybe next time bro
-    </h1>
-  );
+    Perhatikan! : Letakkan logika di DALAM fungsi.
+*/
+class Random extends React.Component {
+    render() {
+        const n = Math.floor(Math.random()*10+1);
+
+        return <h1>The number is {n}!</h1>;
+    }
 }
 
-//  Solusi lain menggunakan Ternary Operator
-const message2 = <h1>{ (grade=='A')?'Wow, you are so smart!':'Maybe next time bro' }</h1>
-
 
 /*
-*   .map di JSX
-*
-*   Digunakan untuk membuat list elemen-elemen JSX
-*   list dalam JSX seharusnya memiliki key dengan nilai yang unik
+    Statemen Kondisional dalam Fungsi Render
+
+    Letakkan statemen kondisional di DALAM fungsi, SEBELUM statemen return.
 */
-const people = ['Rowe', 'Prevost', 'Gare', 'Gare'];
+class TodaysPlan extends React.Component {
+    render() {
+      let task;
+      let apocalypse = false;
 
-const peopleLis = people.map((person, i) =>
-  <li key={'person_' + i}>{person}</li>
-);
+      if (!apocalypse) {
+        task = 'learn React.js'
+      } else {
+        task = 'run around'
+      }
+  
+      return <h1>Today I am going to {task}!</h1>;
+    }
+  }
 
 
-/*
-*   React.createElement
-*
-*   menulis kode React tanpa menggunakan JSX
-*/
-const h1 = React.createElement(
-    "h1",
-    null,
-    "Hello, world"
-  );
+  /*
+    Event Listener dalam Component
+  */
+  class Scream extends React.Component {
+    handleClick() {
+      alert('AAAAAAAAHHH!!!!!');
+    }
+  
+    render() {
+      return <button onClick={this.handleClick}>AAAAAH!</button>;
+    }
+  }
 
 
 
@@ -164,6 +131,6 @@ const h1 = React.createElement(
     Parameter 2 => tempat dimana JSX akan dirender
 */
 ReactDOM.render(
-    h1,
+    <Scream />,
     document.getElementById('root')
 );
