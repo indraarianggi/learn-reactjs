@@ -84,6 +84,76 @@ const goose = 'https://s3.amazonaws.com/codecademy-content/courses/React/react_p
 var gooseImg = <img src = { goose }/>;
 
 
+/*
+*   Event handler
+*/
+function handleClick() {
+    alert('I was clicked');
+}
+
+const btn = <button onClick={handleClick}>Click Me!</button>
+
+
+/*
+*   If Statemen di JSX
+*
+*   Dalam elemen JSK tidak bisa disisipkan statemen if
+*   misal, sintaks berikut salah:
+*
+*   const ifState = <h1>Grade : { if (nilai>80)?'A':'B' }</h1>
+*
+*
+*   Untuk mensiasatinya, letakkan statemne if di luar elemen JSX
+*   sebagai berikut:
+*/
+let message;
+const grade = 'A'
+
+if (grade == 'A') {
+  message = (
+    <h1>
+      Wow, you are so smart!
+    </h1>
+  );
+} else {
+  message = (
+    <h1>
+      Maybe next time bro
+    </h1>
+  );
+}
+
+//  Solusi lain menggunakan Ternary Operator
+const message2 = <h1>{ (grade=='A')?'Wow, you are so smart!':'Maybe next time bro' }</h1>
+
+
+/*
+*   .map di JSX
+*
+*   Digunakan untuk membuat list elemen-elemen JSX
+*   list dalam JSX seharusnya memiliki key dengan nilai yang unik
+*/
+const people = ['Rowe', 'Prevost', 'Gare', 'Gare'];
+
+const peopleLis = people.map((person, i) =>
+  <li key={'person_' + i}>{person}</li>
+);
+
+
+/*
+*   React.createElement
+*
+*   menulis kode React tanpa menggunakan JSX
+*/
+const h1 = React.createElement(
+    "h1",
+    null,
+    "Hello, world"
+  );
+
+
+
+
 
 
 
@@ -94,6 +164,6 @@ var gooseImg = <img src = { goose }/>;
     Parameter 2 => tempat dimana JSX akan dirender
 */
 ReactDOM.render(
-    pi,
+    h1,
     document.getElementById('root')
 );
