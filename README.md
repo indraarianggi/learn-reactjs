@@ -9,3 +9,4 @@ Dalam tutorial ini termasuk:
 - React Component
 - Component Render Other Component
 - Props
+- State

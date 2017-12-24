@@ -2,52 +2,65 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 /*
-    Props
+    State
+
+    Seperti props, digunakan untuk menangani informasi yg dinamis.
+
+    Dinyatakan dalam sebuah PROPERTI STATE di dalam CONSTRUCTOR kelas.
     
-    Props adalah sebuah objek yang menangani informasi sebuah komponen.
+    Berbeda dengan props, properti state TIDAK dilewatkan dari luar kelas komponen.
+    Sebuah komponen menentukan sendiri state-nya.
 
-    Props disisipkan dalam komponen seperti menyisipkan ATRIBUT pada html.
+    Nilai state diakses dengan cara: this.state.NAMA-PROPERTI-STATE.
 
-    Jika nilai yang props yang disisipkan bukan string, harus menggunakan tanda { }
-
-    Nilai sebuah props diakses dengan cara: this.props.NAMA-PROPS-TUJUAN
-    Lebih jelas lihat Profile.js dan Tombol.js
-
-    this.props.children =>> mengembalikan semua diantara 
-    tag pembuka dan penutup sebuah komponen
-    (perhatikan komponen List, List.js).
-
-    defaultProps    => props default yg akan digunakan 
-    jika props yang dimaksud tidak disisipkan dalam komponen.
-    (perhatikan komponen Profile, props job).
+    Nilai state diubah menggunakan fungsi: this.setState();
+    Dimana this.setState() akan memanggil fungsi render() secara otomatis.
 */
-import { Profile } from './Profile';
-import { Btn } from './Tombol';
-import { List } from './List';
+const green = '#39D1B4';
+const yellow = '#FFD712';
 
-class Hello extends React.Component {
-    handleClick() {
-        alert('Hello there, I am still learn ReactJs. This Awesome!');
+class BgColor extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            bgColor   : green,
+            fontColor : yellow
+        };
+
+        this.changeBgColor = this.changeBgColor.bind(this);
     }
 
-    render() {
+    changeBgColor() {
+        const newColor = this.state.bgColor == green ? yellow : green;
+
+        this.setState({ bgColor: newColor });
+    }
+
+    // Tidak perlu bind(this) di dalam constructor.
+    changeFontColor = () => {
+        const newColor = this.state.fontColor == green ? yellow : green;
+
+        this.setState({ fontColor: newColor });
+    }
+
+    render() {    
         return (
-            <div>
-                <h1>Hello World!</h1>
-                <Profile name='Indra Arianggi' age={21} single={false} />
-
-                <Btn onClick={this.handleClick}/>
-
-                <p>I wanna become:</p>
-                <List>
-                    <li>Web Programmer</li>
-                    <li>Android Mobile Programmer</li>
-                    <li>UI/UX Designer</li>
-                </List>
+            <div style={{ background: this.state.bgColor }}>
+                <h1 style={{ color: this.state.fontColor }}>
+                    Change my color
+                </h1>
+                <button onClick={ this.changeBgColor }>
+                    Change Background Color
+                </button>
+                <button onClick={ this.changeFontColor }>
+                    Change Font Color
+                </button>
             </div>
         );
     }
 }
+
 
 
 
@@ -62,6 +75,6 @@ class Hello extends React.Component {
     Parameter 2 => tempat dimana JSX akan dirender
 */
 ReactDOM.render(
-    <Hello />,
+    <BgColor />,
     document.getElementById('root')
 );
