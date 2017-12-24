@@ -8,3 +8,4 @@ Dalam tutorial ini termasuk:
 - Penggunaan JSX
 - React Component
 - Component Render Other Component
+- Props
